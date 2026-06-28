@@ -1,10 +1,11 @@
 import argparse
-from data import fetch_historical_data
+from data import data
 from database import to_database
 
-ticker=input("Enter a ticker: ").upper()
-start_date =input("Enter the start date: ")
-end_date =input("Enter the end date: ")
+def main():
+    ticker =
+    start_date =
+    end_date =
 
-df = fetch_historical_data(ticker, start_date, end_date)
-to_database(df,ticker)
+    df = fetch_ohclv(ticker, start_date, end_date)
+    to_database(df, ticker)
