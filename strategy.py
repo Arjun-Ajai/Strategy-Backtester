@@ -51,11 +51,27 @@ class SmaCrossStrategy(BaseStrategy):
     def params(self):
         return {"fast" : 10 , "slow" : 50}
 
-
 class RsiStrategy(BaseStrategy):
-    def generate_signal(self):
-        pass
+    def generate_signals(self, df):
+        signals = []
+        in_position = False
+        rsi_values = rsi(df.close, 14)
+        oversold, overbought = 30, 70
+
+        for i in range(1, len(df)):
+            if (rsi_values.iloc[i] < oversold and not in_position):
+                in_position = True
+                signals.append(Signal(df.date.iloc[i], "BUY", df.close.iloc[i], f"RSI below {oversold}"))
+            elif (rsi_values.iloc[i] > overbought and in_position):
+                in_position = False
+                signals.append(Signal(df.date.iloc[i], "SELL", df.close.iloc[i], f"RSI above {overbought}"))
+
+        return signals
+
+    @property
     def name(self):
-        pass
+        return "RSI Strategy"
+
+    @property
     def params(self):
-        pass
+        return {"period": 14, "oversold": 30, "overbought": 70}
