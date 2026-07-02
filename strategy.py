@@ -59,10 +59,10 @@ class RsiStrategy(BaseStrategy):
         oversold, overbought = 30, 70
 
         for i in range(1, len(df)):
-            if (rsi_values.iloc[i] < oversold and not in_position):
+            if rsi_values.iloc[i] < oversold and not in_position:
                 in_position = True
                 signals.append(Signal(df.date.iloc[i], "BUY", df.close.iloc[i], f"RSI below {oversold}"))
-            elif (rsi_values.iloc[i] > overbought and in_position):
+            elif rsi_values.iloc[i] > overbought and in_position:
                 in_position = False
                 signals.append(Signal(df.date.iloc[i], "SELL", df.close.iloc[i], f"RSI above {overbought}"))
 
