@@ -45,7 +45,7 @@ class SmaCrossStrategy(BaseStrategy):
 
     @property
     def name(self):
-        return "Sma Cross Strategy"
+        return "Sma Cross Strategy "
 
     @property
     def params(self):
