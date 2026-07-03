@@ -3,13 +3,16 @@ from strategy import *
 
 @dataclass
 class Trades:
+    date: str
+    action: str
+    price: float
+    shares: float
     cash: float
-    shares: int
+    portfolio_value: float
 
 @dataclass
 class EquityCurve:
     date: str
-    equity: float
     portfolio_value: float
 
 class Backtester:
@@ -24,14 +27,17 @@ class Backtester:
                 if signals[j].date == df.date[i]:
                     if signals[j].action == "BUY":
                         shares = cash / df.next_open[i]
-                        trades.append(Trades(0, shares))
-                        shares = 0
+                        cash=0
+                        trades.append(Trades(df.date.iloc[i],"BUY",df.next_open.iloc[i],shares,0,shares*df.next_open.iloc[i]))
+
                     elif signals[j].action == "SELL":
                         cash = shares * df.next_open[i]
-                        trades.append(Trades(cash, 0))
-                        cash =0
+                        shares=0
+                        trades.append(Trades(df.date.iloc[i],"SELL",df.next_open.iloc[i],0,cash,cash))
 
-            equity_curve.append(EquityCurve(df.date[i],trades[i].cash+trades[i].shares*df.close[i],trades[i].cash))
+
+            equity_curve.append(EquityCurve(df.date.iloc[i],cash+shares*df.close.iloc[i]))
+
 
 
         return {"trades": trades, "equity_curve": equity_curve, "final_value": cash}
