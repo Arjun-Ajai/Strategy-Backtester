@@ -7,7 +7,6 @@ and stores every run for comparison.
 ## Install
 
 pip install -r requirements.txt
-
 ## Strategies
 
 **SMA Crossover**
