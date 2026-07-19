@@ -21,3 +21,16 @@ def plot_results(df_ohlcv, equity, trades, run_id, symbol):
     plt.tight_layout()
     plt.savefig(f"results/run_{run_id}.png")
     plt.close()
+
+    equity_dates=[equity.date for equity in equity ]
+    equity_values=[equity.price for equity in equity]
+    initial_shares = 100_000 / df_ohlcv.close.iloc[0]
+    benchmark = (df_ohlcv.close * initial_shares).tolist()
+    ax2.plot(equity_dates, equity_values, color='blue', label='Strategy')
+    ax2.plot(x_values, benchmark, color='orange', label='Buy & Hold')
+    ax2.set_title('Portfolio vs Buy & Hold')
+    ax2.set_ylabel('Value ($)')
+    ax2.legend()
+
+
+
