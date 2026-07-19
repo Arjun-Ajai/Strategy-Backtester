@@ -11,6 +11,12 @@ def plot_results(df_ohlcv, equity, trades, run_id, symbol):
     ax1.set_title('Price Chart')
     ax1.set_ylabel('Price($)')
     ax1.legend()
+    buy_dates=[trades.date for trades in trades if trades.action == 'BUY']
+    buy_prices=[trades.price for trades in trades if trades.action == 'BUY']
+    sell_dates=[trades.date for trades in trades if trades.action == 'SELL']
+    sell_prices=[trades.price for trades in trades if trades.action == 'SELL']
+    ax1.scatter(buy_dates,buy_prices,marker='^',color='blue',label='BUY')
+    ax1.scatter(sell_dates,sell_prices,marker='v',color='red',label='SELl')
     os.makedirs("results", exist_ok=True)
     plt.tight_layout()
     plt.savefig(f"results/run_{run_id}.png")
